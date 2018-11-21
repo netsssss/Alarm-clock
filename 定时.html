@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>定时</title>
+    <link rel="stylesheet" href="./myui.css">
+    <style>
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="my-fixed my-center" style="top: 35%;">
+        <input type="text" id="t" class="my-input" placeholder="分钟" >
+        <input type="button" class="my-btn my-btn-black" value="定时" onclick="start()">
+        <p id="sy"></p>
+    </div>
+    <script>
+        var s = document.getElementById('sy');
+        var st;
+
+        function start() {
+            clearInterval(st);
+            var time = document.getElementById('t').value;
+            var shengyu = time * 60;
+            if(shengyu > 0) {
+                s.innerHTML = showTime(shengyu);
+                nao(shengyu);
+            }
+        }
+
+        function nao(time) {
+            st = setInterval(() => {
+                time--;
+                s.innerHTML = showTime(time);
+
+                if(time <= 0){
+                    s.innerHTML = 'rua!';
+                    getMusic();
+                    clearInterval(st);
+                }
+            }, 1000);
+        }
+
+        function showTime(time) {
+            return time > 60 ? Math.floor(time/60) + ' 分 ' + ((time % 60) > 10 ? time % 60 : '0' + time % 60) + ' 秒' : time + ' 秒';
+        }
+
+        document.onkeydown = function (event) {
+            var e = event || window.event;
+            if (e && e.keyCode == 13) {
+                start();
+            }
+        }; 
+    </script>
+
+    <!-- 一言 -->
+    <div class="my-center my-fixed" style="bottom: 32px;">
+        <p id="hitokoto"></p>
+        <p id="from"></p>
+    </div>
+
+    <!-- 兼容低版本浏览器 (包括 IE)，可移除 -->
+    <script src="https://cdn.jsdelivr.net/npm/bluebird@3/js/browser/bluebird.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/whatwg-fetch@2.0.3/fetch.min.js"></script>
+    <!--End-->
+    <script>
+        function getOne() {
+            fetch('https://v1.hitokoto.cn')
+                .then(function (res){
+                    return res.json();
+                })
+                .then(function (data) {
+                    var hitokoto = document.getElementById('hitokoto');
+                    var from = document.getElementById('from');
+                    hitokoto.innerText = '『 ' + data.hitokoto + ' 』'; 
+                    from.innerText = '- 「' + data.from + ' 」'; 
+                })
+                .catch(function (err) {
+                    // console.error(err);
+                })
+        }
+
+        getOne();
+
+        setInterval(() => {
+            getOne();
+        }, 15000);
+    </script>
+
+    <!-- APlayer -->
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <div id="aplayer"></div>
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js"></script>
+
+    <script>
+
+        var getMusic = function() {
+
+            fetch('https://api.bzqll.com/music/netease/songList?key=579621905&id=879924368')
+            .then(function (res){
+                return res.json();
+            })
+            .then(function (data) {
+                var aplayerAudios = [];
+                data.data.songs.forEach(item => {
+                    var audio = {
+                        name: item.name,
+                        artist: item.singer,
+                        url: item.url,
+                        cover: item.pic
+                    }
+                    aplayerAudios.push(audio);
+                });
+
+                const ap = new APlayer({
+                    container: document.getElementById('aplayer'),
+                    fixed: true,
+                    autoplay: true,
+                    volume: 0.2,
+                    audio: aplayerAudios
+                });
+            })
+            .catch(function (err) {
+                // console.error(err);
+            })
+        }
+
+    </script>
+
+</body>
+</html>

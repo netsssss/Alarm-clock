@@ -1,0 +1,94 @@
+/*!
+ * =================
+ * myui v0.0.1 
+ * =================
+ */
+html,body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", 微软雅黑, Arial, sans-serif;
+    -webkit-text-size-adjust: 100%;
+}
+
+aside,
+details,
+footer,
+header,
+main,
+nav {
+    display: block;
+}
+
+html, body, input, button, .my-btn, .my-input {
+    outline: none;
+}
+
+.my-btn {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42;
+    position: relative;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+    color: #233;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #fff;
+    background-clip: padding-box;
+    transition: all 0.1s;
+}
+
+.my-btn:hover {
+    color: #233;
+    background-color: #eee;
+}
+
+.my-btn-black {
+    color: #eee;
+    background-color: #233;
+}
+
+.my-btn-black:hover {
+    color: #eee;
+    background-color: #000;
+}
+
+.my-disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.my-disabled:hover {
+    color: inherit;
+    background-color: inherit;
+}
+
+.my-input {
+    line-height: 1em;
+    padding: 8px 15px;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 3px;
+    background-color: #fff;
+}
+
+.my-center {
+    width: 100%;
+    text-align: center;
+}
+
+.my-fixed {
+    position: fixed;
+}
+
+.my-left {
+    float: left;
+}
+
+.my-right {
+    float: right;
+}
